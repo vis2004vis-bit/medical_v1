@@ -24,6 +24,8 @@ npm install
 npm run dev
 ```
 
+Open the app at http://localhost:5173
+
 ## API Routes (prefixed by `/api`)
 - POST `/signup`
 - POST `/login`
