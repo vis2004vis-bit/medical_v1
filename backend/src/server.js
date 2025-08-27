@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename)
 app.use('/public', express.static(path.join(__dirname, 'uploads')))
 
 app.get('/api/health', (_req, res) => res.json({ ok: true }))
-app.use('/api/auth', authRoutes)
+app.use('/api', authRoutes)
 app.use('/api', predictionRoutes)
 app.use('/api', statsRoutes)
 

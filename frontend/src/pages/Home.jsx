@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useRef } from 'react'
+import Stats from '../components/Stats'
 
 export default function Home() {
-  const { isAuthenticated } = useAuth()
+  const statsRef = useRef(null)
 
   return (
     <div className="">
@@ -16,29 +16,16 @@ export default function Home() {
             Upload chest X-rays and get AI-powered predictions with confidence and optional segmentation maps.
           </motion.p>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mt-8">
-            <Link to={isAuthenticated ? "/upload" : "/signup"} className="inline-block rounded-lg bg-sky-600 px-6 py-3 text-white shadow hover:bg-sky-700">
+            <button onClick={() => {
+              const el = document.getElementById('stats')
+              if (el) el.scrollIntoView({ behavior: 'smooth' })
+            }} className="inline-block rounded-lg bg-sky-600 px-6 py-3 text-white shadow hover:bg-sky-700">
               Get Started
-            </Link>
+            </button>
           </motion.div>
         </div>
       </section>
-
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-5xl px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { label: 'Registered Users', value: 0 },
-            { label: 'Total Scans', value: 0 },
-            { label: 'Accuracy', value: 0 },
-          ].map((stat, idx) => (
-            <div key={idx} className="rounded-xl border bg-gradient-to-br from-slate-50 to-white p-8 text-center shadow-sm">
-              <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }} className="text-3xl font-bold text-slate-900">
-                {stat.value}
-              </motion.div>
-              <div className="mt-2 text-slate-600">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <Stats ref={statsRef} />
     </div>
   )
 }

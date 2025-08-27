@@ -15,7 +15,7 @@ export default function Login() {
     setError('')
     setLoading(true)
     try {
-      const res = await axios.post(import.meta.env.VITE_API_URL + '/auth/login', form)
+      const res = await axios.post(import.meta.env.VITE_API_URL + '/login', form)
       login({ token: res.data.token, user: res.data.user })
       navigate('/dashboard')
     } catch (err) {
