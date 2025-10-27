@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
 export default function Upload() {
-  const { token } = useAuth();
+  const { user, token } = useAuth();
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -43,7 +43,21 @@ export default function Upload() {
       );
       setResult(res.data);
     } catch (e) {
-      setError(e?.response?.data?.message || "Upload failed");
+      console.error("Upload error:", e);
+      if (e.response) {
+        console.error("Response data:", e.response.data);
+        console.error("Response status:", e.response.status);
+        console.error("Response headers:", e.response.headers);
+        setError(
+          e.response.data?.message || `Server error (${e.response.status})`
+        );
+      } else if (e.request) {
+        console.error("Request made but no response:", e.request);
+        setError("No response received from server");
+      } else {
+        console.error("Error setting up request:", e.message);
+        setError("Request setup failed");
+      }
     } finally {
       setLoading(false);
     }

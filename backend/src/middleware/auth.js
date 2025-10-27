@@ -23,7 +23,15 @@ export async function authCognitoMiddleware(req, res, next) {
 
     jwt.verify(token, getKey, { algorithms: ["RS256"] }, (err, decoded) => {
       if (err) return res.status(401).json({ message: "Invalid token" });
-      req.user = decoded; // Cognito user info: sub, email, username
+      req.user = {
+        username:
+          decoded["cognito:username"] ||
+          decoded.username ||
+          decoded.email ||
+          decoded.sub,
+        email: decoded.email,
+        sub: decoded.sub,
+      };
       next();
     });
   } catch (e) {
