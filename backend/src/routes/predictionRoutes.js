@@ -4,7 +4,7 @@ import {
   uploadMiddleware,
   getDashboard,
 } from "../controllers/predictionController.js";
-import { authCognitoMiddleware } from "../middleware/authCognito.js";
+import { authCognitoMiddleware } from "../middleware/auth.js";
 
 const router = Router();
 

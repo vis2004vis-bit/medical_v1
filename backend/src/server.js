@@ -10,7 +10,32 @@ import predictionRoutes from "./routes/predictionRoutes.js";
 import statsRoutes from "./routes/statsRoutes.js";
 
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+  "https://d1gfskqh5mc7gl.cloudfront.net",
+  "http://localhost:3000",
+  "http://localhost:5173",
+];
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-Amz-Date",
+      "X-Api-Key",
+      "X-Amz-Security-Token",
+    ],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(morgan("dev"));
 

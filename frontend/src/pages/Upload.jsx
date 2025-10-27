@@ -25,9 +25,12 @@ export default function Upload() {
     setLoading(true);
     setError("");
     setResult(null);
+
     try {
       const formData = new FormData();
       formData.append("image", file);
+      formData.append("username", user?.profile?.email || "anonymous");
+
       const res = await axios.post(
         import.meta.env.VITE_API_URL + "/upload",
         formData,
