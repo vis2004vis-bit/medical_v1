@@ -15,7 +15,6 @@ export default function Dashboard() {
           import.meta.env.VITE_API_URL + "/dashboard",
           {
             headers: { Authorization: `Bearer ${token}` },
-            withCredentials: true,
           }
         );
         setItems(res.data.images || []);
