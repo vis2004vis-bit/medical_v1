@@ -102,6 +102,9 @@ export const uploadMiddleware = multer({ storage }).single("image");
 // =============== HANDLE UPLOAD (MAIN FUNCTION) ===================
 export async function handleUpload(req, res) {
   try {
+    // console.log("🧩 [handleUpload] req.user:", req.user);
+    // console.log("🧩 [handleUpload] req.body:", req.body);
+    // console.log("🧩 [handleUpload] req.file:", req.file?.originalname);
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
     const username = req.user.username;
@@ -168,6 +171,7 @@ export async function handleUpload(req, res) {
     }
 
     // 5️⃣ Save to MongoDB
+    console.log("💾 [MongoDB Save] Using username:", username);
     let doc = await Prediction.findOne({ username });
     if (!doc) doc = await Prediction.create({ username, images: [] });
 

@@ -21,6 +21,11 @@ export async function authCognitoMiddleware(req, res, next) {
 
     const token = authHeader.split(" ")[1];
 
+    // const decoded = jwt.decode(token, { complete: true });
+    // console.log("🧾 Decoded JWT header:", decoded.header);
+    // console.log("🧾 Decoded JWT payload:", decoded.payload);
+    // console.log("🔑 Token use:", decoded.token_use);
+
     jwt.verify(token, getKey, { algorithms: ["RS256"] }, (err, decoded) => {
       if (err) return res.status(401).json({ message: "Invalid token" });
       req.user = {
@@ -32,6 +37,7 @@ export async function authCognitoMiddleware(req, res, next) {
         email: decoded.email,
         sub: decoded.sub,
       };
+      console.log("🧠 [authCognitoMiddleware] Decoded user:", req.user);
       next();
     });
   } catch (e) {

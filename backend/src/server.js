@@ -14,6 +14,9 @@ const allowedOrigins = [
   "https://d1gfskqh5mc7gl.cloudfront.net",
   "http://localhost:3000",
   "http://localhost:5173",
+  "http://13.233.85.152:5173",
+  "http://13.233.85.152",
+  "https://5az0dbmx98.execute-api.ap-south-1.amazonaws.com",
 ];
 app.use(
   cors({
